@@ -19,7 +19,11 @@ class PostsViewController: UIViewController,serviceManagerDelegate {
        self.serviceCalling(withURl: "1", isShowLoader: true)
         // add target to refresh controller
         self.refreshPageController.addTarget(self, action: #selector(self.pullToRefreshMethod(_:)), for: .valueChanged)
-        self.postsTableView.refreshControl = self.refreshPageController
+        if #available(iOS 10.0, *) {
+            self.postsTableView.refreshControl = self.refreshPageController
+        } else {
+            self.postsTableView.addSubview(self.refreshPageController)
+        }
     }
     
     //Pull to refresh controller target method
